@@ -12,7 +12,7 @@ private:
     // Data
     Vec3 _box_min = Vec3(0);
     Vec3 _box_max = Vec3(0);
-    HittableList _sides{};
+    HittableList _sides{};      // TODO this needs to be deep copyied as well
 
 #ifndef USE_BOOK_BOX_HEIARCHY
     // It's slightly more optimized to use a BVH node in the `box` instead of a hittable list

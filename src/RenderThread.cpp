@@ -90,6 +90,9 @@ void RenderThread::_thread_main_loop() NOEXCEPT {
     _running.store(true);
     _stop_requested.store(false);
 
+    // Deepy copy the scene
+    _r_ctx.camera = _r_ctx.camera->deep_copy();
+
     RenderTask task;
     bool got_task = false;
 
