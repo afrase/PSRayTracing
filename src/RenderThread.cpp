@@ -90,8 +90,12 @@ void RenderThread::_thread_main_loop() NOEXCEPT {
     _running.store(true);
     _stop_requested.store(false);
 
-    // Deepy copy the scene
+    // Deep copy the scene, that way each thread has it's own local version
+    // to use
+#ifdef USE_DEEP_COPY_PER_THREAD
     _r_ctx.camera = _r_ctx.camera->deep_copy();
+    _r_ctx.scene = _r_ctx.scene->deep_copy();
+#endif
 
     RenderTask task;
     bool got_task = false;

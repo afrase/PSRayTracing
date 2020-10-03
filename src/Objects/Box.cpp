@@ -28,6 +28,20 @@ Box::Box(
 #endif
 }
 
+shared_ptr<IHittable> Box::deep_copy() const NOEXCEPT {
+    auto box = make_shared<Box>(*this);
+
+    // This nasty line creates a deep copy of all the sides (doing a deep copy of all the elements in the list)
+    // then we have to cast it up to `HittableList`, and then finally do a copy-assignment into the deep copied Box
+    box->_sides = *(dynamic_pointer_cast<HittableList>(_sides.deep_copy()));
+
+#ifndef USE_BOOK_BOX_HEIARCHY
+    box->_heiarchy = dynamic_pointer_cast<BVHNode>(_heiarchy->deep_copy());
+#endif
+
+    return box;
+}
+
 bool Box::hit(RandomGenerator &rng, const Ray &r, const rreal t_min, const rreal t_max, HitRecord &rec) const NOEXCEPT {
 #ifdef USE_BOOK_BOX_HEIARCHY
     // Book code uses the `HittableList` for hit detection (slightly slower)

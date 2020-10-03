@@ -23,7 +23,7 @@ Sphere::Sphere(const Vec3 &cen, const rreal r, const shared_ptr<IMaterial> &mat)
     _mat_ptr(mat)
 { }
 
-std::shared_ptr<IHittable> Sphere::deep_copy() const NOEXCEPT {
+shared_ptr<IHittable> Sphere::deep_copy() const NOEXCEPT {
     auto s = make_shared<Sphere>(*this);
     s->_mat_ptr = _mat_ptr->deep_copy();
 
